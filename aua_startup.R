@@ -1,3 +1,8 @@
+install.packages(c("plyr","tidyverse","ggmap",
+                   "maps","mapdata","readxl",
+                   "mapdata","readxl","bezier",
+                   "reshape2","hash","grid"))
+
 library(plyr)
 library(tidyverse)
 library(ggmap)
