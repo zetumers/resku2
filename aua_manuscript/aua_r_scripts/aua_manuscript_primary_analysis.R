@@ -1,4 +1,3 @@
-
 #######TABLE 1 FEATURES#########
 
 mean(total_pts$anon_age, na.rm = TRUE)

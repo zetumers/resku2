@@ -132,3 +132,4 @@ ratio2 <- function(long_df, fact_a, fact_b, reference, value){
         ratio <- num/dem
         return(ratio)
 }
+

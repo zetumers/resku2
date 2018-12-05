@@ -311,7 +311,6 @@ model_urs <- glm(any_urs ~ age2 + gender + bmi2 + white + anom2 +
                  family = binomial(link = "logit"), data = secondary_analysis)
 
 summary(model_urs)
-
 exp(coef(model_urs))
 exp(confint(model_urs))
 
