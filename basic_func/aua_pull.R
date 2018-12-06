@@ -55,10 +55,10 @@ aua_elim_blank <- function(long_df){
 }
 
 aua_pull_resku <- function(){
-        resku <- aua_read_in(filename)
-        resku1 <- tbl_df(aua_set_order(resku))
-        resku2 <- aua_melt1(resku1)
-        resku3 <- aua_elim_na(resku2)
+        resku <<- aua_read_in(filename)
+        resku1 <<- tbl_df(aua_set_order(resku))
+        resku2 <<- aua_melt1(resku1)
+        resku3 <<- aua_elim_na(resku2)
         resku_df <<- aua_elim_blank(resku3)
         small <<- filter(resku3, record_id %in% 3:100)
 }
