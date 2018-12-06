@@ -140,19 +140,19 @@ processed_df %>%
   left_join(img_type_df, by = c("record_id"))  %>%
   filter(!is.na(img_type)) %>%
   mutate(img_type = img_type) %>%
-  filter(ans != "SWL")-> processed_df
+  filter(ans != "SWL")-> processed_df1
 
-processed_df$img_size <- as.numeric(processed_df$img_size)
-processed_df$img_cat <- cut(processed_df$img_size, breaks = c(-1,10,20,200), labels = c(1,2,3))
-processed_df$img_size2 <- aua_cut_size(processed_df$img_size)
+processed_df1$img_size <- as.numeric(processed_df1$img_size)
+processed_df1$img_cat <- cut(processed_df1$img_size, breaks = c(-1,10,20,200), labels = c(1,2,3))
+processed_df1$img_size2 <- aua_cut_size(processed_df1$img_size)
 
-processed_df %>%
+processed_df1 %>%
   group_by(record_id, side) %>%
   summarize(surgery_types = n()) -> surg_num_df
 
-processed_df <- left_join(processed_df, surg_num_df, by = c("record_id","side"))
+processed_df1 <- left_join(processed_df1, surg_num_df, by = c("record_id","side"))
 
-base_df0 <- processed_df
+base_df0 <- processed_df1
 base_df1 <- base_df0
 base_df1$stone_num <- as.factor(base_df1$stone_num)
 base_df1$stone_num <- mapvalues(base_df1$stone_num, c("1","2","3","5"), c("1","2","3",">3"))
@@ -224,7 +224,6 @@ total3 %>%
 pt_age_df <- read.csv("../data/pt_age.csv")
 total4b <- left_join(total4, pt_age_df, by = "record_id")
 
-
 #All patients analyzed
 total4b %>%
   mutate(bmi2 = bmi/10,
@@ -244,7 +243,7 @@ total4b %>%
 total4b %>%
   filter(img_size >= 20) %>%
   filter(ans != "BOTH") %>%
-  filter(img_type != "US") %>%
+  #filter(img_type != "US") %>%
   mutate(any_urs = ans %in% c("URS","BOTH")) -> total5
 
 total5 %>%
@@ -298,7 +297,7 @@ total5 %>%
          ans2 = relevel(factor(ans),"PCNL")) -> secondary_analysis
 
 model_urs <- glm(any_urs ~ age2 + gender + bmi2 + white + anom2 +
-                   stone_num + size + urologist,
+                   stone_num + size + img_type + urologist,
                  family = binomial(link = "logit"), data = secondary_analysis)
 
 summary(model_urs)
