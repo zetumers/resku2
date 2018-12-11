@@ -7,10 +7,8 @@
 
 eval_sxs <- function(df){
         sxs <- any((df$variable == "stone_symptomatic") & (df$value == "1"))
-        if(sxs == TRUE){
-                df$sxs <- 1
-        }
-        else{df$sxs <- 0}
+        sxs <- as.numeric(sxs)
+        df$sxs <- sxs
         return(df)
 }
 
